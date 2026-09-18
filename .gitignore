@@ -16,3 +16,4 @@ coverage/
 .vscode/
 .idea/
 *.log
+.signal-triage-ARCHITECTURE.md
