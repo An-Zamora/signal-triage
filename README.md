@@ -2,8 +2,7 @@
 
 **Turn a batch of customer-support messages into a ranked list of product themes — then flip between "loudest" and "most important" and watch the order change.** It exists to make one argument concrete: the loudest theme in a support inbox is usually not the one you should build for.
 
-<!-- TODO: replace with a real screenshot/GIF of the sort toggle flipping the ranking. This is the whole pitch — keep it above the fold. -->
-![The sort toggle flipping the ranking](docs/sort-toggle.gif)
+![The ranked theme list flipping from "Rank by volume" to "Rank by priority"](docs/sort-toggle.gif)
 
 **Live demo:** https://an-zamora.github.io/signal-triage/ · **CI:** ![CI](https://github.com/An-Zamora/signal-triage/actions/workflows/ci.yml/badge.svg)
 
