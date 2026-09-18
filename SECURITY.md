@@ -12,7 +12,7 @@ Expected first response: **within 5 business days.**
 
 signal-triage is a fully static, client-side app. There is no backend, no
 database, and no request that carries user-supplied text off the machine
-(see [ADR-001 in the architecture spec](./signal-triage-ARCHITECTURE.md)).
+(see [ADR-001 in the architecture spec](./docs/ARCHITECTURE.md)).
 
 The most valuable reports concern:
 

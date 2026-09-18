@@ -1,8 +1,8 @@
 import { useMemo, useReducer } from 'react';
 import type { Lexicon, SortMode } from '../domain/types';
-import { DEFAULT_LEXICON } from '../domain/lexicon';
 import { groupByTheme, parseMessages } from '../domain/classify';
 import { rankThemes, scoreThemes } from '../domain/score';
+import { DATASETS, DEFAULT_DATASET_ID, datasetById } from '../fixtures/datasets';
 import { SourcePanel } from './SourcePanel';
 import { ThemeList } from './ThemeList';
 import { ThemeDetail } from './ThemeDetail';
@@ -12,6 +12,7 @@ import { Caveats } from './Caveats';
 interface State {
   rawText: string;
   lexicon: Lexicon;
+  datasetId: string | null; // which sample is loaded; null once the user edits
   fitValues: Record<string, number>;
   sortMode: SortMode;
   selectedThemeId: string | null;
@@ -19,6 +20,7 @@ interface State {
 
 type Action =
   | { type: 'setText'; text: string }
+  | { type: 'loadDataset'; id: string }
   | { type: 'clear' }
   | { type: 'setSort'; mode: SortMode }
   | { type: 'setFit'; themeId: string; value: number }
@@ -26,9 +28,13 @@ type Action =
   | { type: 'setLexicon'; lexicon: Lexicon }
   | { type: 'resetLexicon' };
 
+// Open with a sample already loaded (audit: an empty textarea wastes the first
+// fifteen seconds). "Clear" is one click away for anyone bringing their own data.
+const defaultDataset = datasetById(DEFAULT_DATASET_ID);
 const initialState: State = {
-  rawText: '',
-  lexicon: DEFAULT_LEXICON,
+  rawText: defaultDataset.messages,
+  lexicon: defaultDataset.lexicon,
+  datasetId: defaultDataset.id,
   fitValues: {},
   sortMode: 'volume',
   selectedThemeId: null,
@@ -37,9 +43,21 @@ const initialState: State = {
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'setText':
-      return { ...state, rawText: action.text };
+      // Editing the text detaches it from the loaded sample.
+      return { ...state, rawText: action.text, datasetId: null };
+    case 'loadDataset': {
+      const ds = datasetById(action.id);
+      return {
+        ...state,
+        rawText: ds.messages,
+        lexicon: ds.lexicon,
+        datasetId: ds.id,
+        fitValues: {},
+        selectedThemeId: null,
+      };
+    }
     case 'clear':
-      return { ...state, rawText: '', fitValues: {}, selectedThemeId: null };
+      return { ...state, rawText: '', datasetId: null, fitValues: {}, selectedThemeId: null };
     case 'setSort':
       return { ...state, sortMode: action.mode };
     case 'setFit':
@@ -49,7 +67,7 @@ function reducer(state: State, action: Action): State {
     case 'setLexicon':
       return { ...state, lexicon: action.lexicon };
     case 'resetLexicon':
-      return { ...state, lexicon: DEFAULT_LEXICON };
+      return { ...state, lexicon: defaultDataset.lexicon };
     default:
       return state;
   }
@@ -95,6 +113,9 @@ export function App() {
           rawText={state.rawText}
           messageCount={messages.length}
           lexicon={state.lexicon}
+          datasets={DATASETS}
+          activeDatasetId={state.datasetId}
+          onLoadDataset={(id) => dispatch({ type: 'loadDataset', id })}
           onChangeText={(text) => dispatch({ type: 'setText', text })}
           onClear={() => dispatch({ type: 'clear' })}
           onSetLexicon={(lexicon) => dispatch({ type: 'setLexicon', lexicon })}

@@ -11,9 +11,9 @@ coverage/
 .env.*
 !.env.example
 
-# editor / OS
+# editor / OS / local tooling
 .DS_Store
 .vscode/
 .idea/
+.claude/
 *.log
-.signal-triage-ARCHITECTURE.md

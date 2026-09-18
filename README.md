@@ -16,13 +16,13 @@ This is **enforced, not just asserted.** The page ships a Content-Security-Polic
 
 ## How it works
 
-Paste support messages (one per line) or click **Load sample**. Optionally attribute a line to a sender with ` | ` so *reach* counts distinct people:
+The app opens with a sample already loaded. Switch between the **Generic SaaS** and **Clinic software** datasets, or hit **Clear** and paste your own — one message per line. Optionally attribute a line to a sender with ` | ` so *reach* counts distinct people:
 
 ```
 sarah@clinic.com | the export button is broken
 ```
 
-Messages are grouped into themes by a keyword lexicon you can read and edit in the app, then scored and ranked. Toggle between **Rank by volume** and **Rank by priority** to see the ordering change.
+Messages are grouped into themes by a keyword lexicon you can read and edit in the app (each dataset ships its own), then scored and ranked. Toggle between **Rank by volume** and **Rank by priority** to see the ordering change — the loudest theme drops several places.
 
 ## The scoring model
 
@@ -68,7 +68,7 @@ That is the entire runtime list. Everything else (Vite, TypeScript, Vitest, ESLi
 
 ## Architecture
 
-The full spec — decisions, threat model, and CSP rationale — is in [`signal-triage-ARCHITECTURE.md`](signal-triage-ARCHITECTURE.md). The one layering rule worth knowing: **`src/domain/` imports nothing from `ui/`**, has no side effects, and is where all the tested logic lives.
+The full spec — decisions, threat model, and CSP rationale — is in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). The one layering rule worth knowing: **`src/domain/` imports nothing from `ui/`**, has no side effects, and is where all the tested logic lives.
 
 ```
 src/
