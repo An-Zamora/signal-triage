@@ -6,13 +6,29 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      # Keep the noise down: batch minor/patch bumps into one PR.
-      minor-and-patch:
+      # One PR for all safe (minor/patch) bumps instead of a flood.
+      npm-minor-patch:
+        patterns: ["*"]
         update-types:
           - minor
           - patch
+    ignore:
+      # Major bumps of a small pinned toolchain break more than they fix and
+      # are done deliberately, not by bot. Real vulnerabilities are still
+      # handled by Dependabot security updates (enabled on the repo).
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
+    groups:
+      actions-all:
+        patterns: ["*"]
+        update-types:
+          - minor
+          - patch
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
