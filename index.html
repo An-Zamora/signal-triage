@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Content Security Policy (spec §6.2). GitHub Pages cannot set HTTP headers,
+      so the policy ships as a meta tag. `connect-src 'self'` is what mechanically
+      enforces ADR-001: the deterministic build cannot make an outbound request
+      even if a dependency tried to. No third-party fonts, no analytics, no CDN.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
+    />
+
+    <meta
+      name="description"
+      content="Rank a batch of support messages by volume vs. priority — and watch the order change. Runs entirely in your browser; nothing is sent anywhere."
+    />
+    <title>signal-triage — loud vs. important</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
