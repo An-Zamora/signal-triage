@@ -20,6 +20,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # enablement: true re-creates the Pages site if it was disabled (e.g. by
+      # briefly flipping the repo to private), so the deploy self-heals.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -29,7 +34,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_PAGES: 'true'
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
