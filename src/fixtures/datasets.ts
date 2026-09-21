@@ -9,7 +9,7 @@
 // reach counts distinct people rather than messages.
 
 import type { Lexicon } from '../domain/types';
-import { DEFAULT_LEXICON, DEFAULT_SEVERITY } from '../domain/lexicon';
+import { DEFAULT_LEXICON} from '../domain/lexicon';
 
 export interface Dataset {
   readonly id: string;
